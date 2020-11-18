@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<head>
+    <title>Simplex</title>
+    <script src="simplex.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="titleBar">
+        <a href="index.html"><img class="homeButton" src="assets/back-button.png" width="40" height="40" alt="Home"/></a>
+        <h1>Simplex</h1>
+    </div>
+    <div class="questionContainer">
+        <a href="simplexTableau.html">Use a tableau instead</a>
+        <div class="buttonContainer">
+            <button id="green" onClick="addRow()">Add constraint</button>
+            <button id="red" onClick="deleteRow()">Delete constraint</button><p>|</p>
+            <button id="blue" onClick="addCol()">Add variable</button>
+            <button id="blueDark" onClick="deleteCol()">Delete variable</button>
+        </div>
+        <div class="tableContainerSimplex">
+            <p>Function to be maximized/minimized:</p>
+            <table id="simplexBasicTable">
+                <tr>
+                    <td><p> </p></td>
+                    <td><input type="number" value=90 onClick="this.select()"><span> X1</span></td>
+                    <td><span>+ </span><input type="number" value=75 onClick="this.select()"><span> X2</span></td>
+                    <td><span>= Z</td>
+                </tr>
+                <tr>
+                    <td><p>1</p></td>
+                    <td><input type="number" value=3 onClick="this.select()"><span> X1</span></td>
+                    <td><span>+ </span><input type="number" value=2 onClick="this.select()"><span> X2</span></td>
+                    <td>
+                        <select name="inequality" id="inequality">
+                            <option value="less">&#x2264;</option>
+                            <option value="greater">&#x2265;</option>
+                        </select>
+                        <input type="number" value=66 onClick="this.select()">
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>2</p></td>
+                    <td><input type="number" value=9 onClick="this.select()"><span> X1</span></td>
+                    <td><span>+ </span><input type="number" value=4 onClick="this.select()"><span> X2</span></td>
+                    <td>
+                        <select name="inequality" id="inequality">
+                            <option value="less">&#x2264;</option>
+                            <option value="greater">&#x2265;</option>
+                        </select>
+                        <input type="number" value=180 onClick="this.select()">
+                    </td>
+                </tr>
+                <tr>
+                    <td><p>3</p></td>
+                    <td><input type="number" value=2 onClick="this.select()"><span> X1</span></td>
+                    <td><span>+ </span><input type="number" value=10 onClick="this.select()"><span> X2</span></td>
+                    <td>
+                        <select name="inequality" id="inequality">
+                            <option value="less">&#x2264;</option>
+                            <option value="greater">&#x2265;</option>
+                        </select>
+                        <input type="number" value=200 onClick="this.select()">
+                    </td>
+                </tr>
+            </table>
+            <strong><p style="display: inline" id="variableList">X1, X2</p><p style="display: inline"> &#x2265; 0</p></strong>
+        </div>
+        <div class="parameterContainer">
+            <p>Round-off values to <input id="precision" type="number" value="4"> decimal places</p>
+            <div>
+                <button id="amber" onClick="simplex(scrapeTableau(true), true, false)">Maximize</button>
+                <button id="orange" onClick="simplex(scrapeTableau(false), false, false)">Minimize</button>
+            </div>
+        </div>
+    </div>
+    <div id="answerContainer">
+        <div id="stepBystepSolutions">
+            <h2>Solutions will appear here...</h2>
+        </div>
+    </div>
+</body>

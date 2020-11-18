@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+    <title>Simplex (Tableau input)</title>
+    <script src="simplexTableau.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="titleBar">
+        <a href="index.html"><img class="homeButton" src="assets/back-button.png" width="40" height="40" alt="Home"/></a>
+        <h1>Simplex (Tableau input)</h1>
+    </div>
+    <div class="questionContainer">
+        <a href="simplex.html">Enter equations instead</a>
+        <div class="buttonContainer">
+            <button id="green" onClick="addRow()">Add row</button>
+            <button id="red" onClick="deleteRow()">Delete row</button><p>|</p>
+            <button id="blue" onClick="addCol('variable')">Add variable</button>
+            <button id="blueDark" onClick="deleteCol('variable')">Delete variable</button><p>|</p>
+            <button id="teal" onClick="addCol('slack')">Add slack variable</button>
+            <button id="tealDark" onClick="deleteCol('slack')">Delete slack variable</button>
+        </div>
+        <div class="tableContainerTableau">
+            <table id="table">
+                <tr class="topRow">
+                    <td> </td>
+                    <td><input id="blue" type="text" value="X1" onClick="this.select()"></td>
+                    <td><input id="blue" type="text" value="X2" onClick="this.select()"></td>
+                    <td><input id="teal" type="text" value="S1" onClick="this.select()"></td>
+                    <td><input id="teal" type="text" value="S2" onClick="this.select()"></td>
+                    <td><input id="teal" type="text" value="S3" onClick="this.select()"></td>
+                    <td><input id="green" type="text" value="Z" onClick="this.select()"></td>
+                    <td><input id="greenLight" type="text" value="Solution" onClick="this.select()"></td>
+                </tr>
+                <tr>
+                    <td><p>1</p></td>
+                    <td><input type="number" value=3 onClick="this.select()"></td>
+                    <td><input type="number" value=2 onClick="this.select()"></td>
+                    <td><input type="number" value=1 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=66 onClick="this.select()"></td>
+                </tr>
+                <tr>
+                    <td><p>2</p></td>
+                    <td><input type="number" value=9 onClick="this.select()"></td>
+                    <td><input type="number" value=4 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=1 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=180 onClick="this.select()"></td>
+                </tr>
+                <tr>
+                    <td><p>3</p></td>
+                    <td><input type="number" value=2 onClick="this.select()"></td>
+                    <td><input type="number" value=10 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=1 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=200 onClick="this.select()"></td>
+                </tr>
+                <tr>
+                    <td><p>4</p></td>
+                    <td><input type="number" value=-90 onClick="this.select()"></td>
+                    <td><input type="number" value=-75 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                    <td><input type="number" value=1 onClick="this.select()"></td>
+                    <td><input type="number" value=0 onClick="this.select()"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="parameterContainer">
+            <p>Round-off values to <input id="precision" type="number" value="4"> decimal places</p>
+            <div>
+                <button id="amber" onClick="simplex(scrapeTableau(), true, false)">Maximize</button>
+                <button id="orange" onClick="simplex(scrapeTableau(), false, false)">Minimize</button>
+            </div>
+        </div>
+    </div>
+    <div id="answerContainer">
+        <div id="stepBystepSolutions">
+            <h2>Solutions will appear here...</h2>
+        </div>
+    </div>
+</body>

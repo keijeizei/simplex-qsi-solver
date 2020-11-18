@@ -1,0 +1,347 @@
+@font-face {
+	font-family: "Roboto-Regular";
+	src: url("fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+	font-family: "Roboto-Black";
+	src: url("fonts/Roboto-Black.ttf");
+}
+
+body {
+	font-family: "Roboto-Black";
+	margin: 0;
+	padding: 0;
+}
+
+/* REMOVE THE ARROWS FROM THE INPUT BOX*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+	-moz-appearance: textfield;
+}
+
+p {
+	font-family: "Roboto-Regular";
+    margin: 0;
+}
+
+h1 {
+	font-family: "Roboto-Black";
+}
+
+h2 {
+	font-family: "Roboto-Black";
+}
+
+h3 {
+	font-family: "Roboto-Black";
+}
+
+a {
+	font-family: "Roboto-Regular";
+	font-size: 16px;
+	color: white;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+tr {
+	margin: 5px;
+}
+
+td {
+	padding: 8px;
+	border: 1px solid black;
+}
+
+input {
+	width: 40px;
+	padding: 10px;
+}
+
+/*QSI input box */
+.tableContainerQSI input {
+	width: 80px;
+}
+
+.tableContainerTableau input {
+	width: 50px;
+}
+
+.tableContainerSimplex tr td {
+	min-width: 130px;
+	border: 1px solid red;
+}
+
+.tableContainerSimplex {
+	width: 95%;
+	padding-left: 30px;
+}
+
+.tableContainerTableau {
+	width: 95%;
+	padding-left: 30px;
+}
+
+#precision {
+	width: 20px;
+}
+
+select {
+	margin-right: 3px;
+}
+
+button {
+	margin: 10px 5px;
+	padding: 20px 30px;
+	color: white;
+	border: 0;
+	border-radius: 30px;
+}
+
+button:hover {
+	opacity: 0.7;
+}
+
+.homeButton {
+	margin: 0 20px;
+}
+
+.homeButton:hover {
+	opacity: 0.4;
+}
+
+.titleBar {
+	display: flex;
+	align-items: center;
+	background-color: #222222;
+	color: white;
+
+	padding: 10px;
+}
+
+.questionContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	margin: 20px 20px;
+	padding: 30px 0;
+	box-shadow: 2px 2px 20px 5px #888888;
+	border-radius: 20px;
+
+	overflow: auto;
+}
+
+.buttonContainer {
+	display: flex;
+	align-items: center;
+}
+
+.tableContainer {
+}
+
+.parameterContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	margin: 10px;
+}
+
+/*answerContainer is an ID because it is used in the JS*/
+#answerContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	margin: 20px 20px;
+	padding: 20px;
+	box-shadow: 2px 2px 20px 5px #888888;
+	border-radius: 20px;
+}
+
+#functions {
+	margin: 0px 10px;
+}
+
+#bounds {
+	margin: 0px 10px;
+}
+
+#graph {
+	margin: 20px;
+	border: 1px solid black;
+}
+
+.solutionFunctions {
+	display: flex;
+}
+
+.topRow {
+	background-color: #222222;
+}
+
+.topRow input {
+	background-color: #555555;
+	color: white;
+	border: 0;
+}
+
+#simplexBasicTable {
+	border: none
+}
+
+#simplexBasicTable td, th{
+	border: none;
+}
+
+#tableTitle {
+	text-align: center;
+	margin-top: 30px;
+}
+
+#solutionTable {
+	margin: 10px auto;
+}
+
+#solutionTable td {
+	width: 100px;
+}
+
+#finalSolution {
+	margin: 10px auto;
+}
+
+#finalSolution td {
+	width: 100px;
+}
+
+/* ------COLORS------ */
+#red {
+	background-color: #F44336;
+}
+
+#blue {
+	background-color: #2196F3;
+}
+
+#blueDark {
+	background-color: #1565C0;
+}
+
+#teal {
+	background-color: #009688;
+}
+
+#tealDark {
+	background-color: #00695C;
+}
+
+#green {
+	background-color: #4CAF50;
+}
+
+#greenLight {
+	background-color: #8BC34A;
+}
+
+#amber {
+	background-color: #FF6F00;
+}
+
+#orange {
+	background-color: #E65100;
+}
+
+/* ------INDEX.HTML STYLES------ */
+.portalContainer {
+	display: flex;
+	height: 100vh;
+}
+
+.simplexPortal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+
+	background-color: #1565C0;
+	transition: 0.2s;
+}
+
+.simplexPortal:hover {
+	background-color: #2196F3;
+}
+
+.simplexPortal:hover .simplexDescription{
+	color: white;
+}
+
+.qsiPortal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex: 1;
+
+	background-color: #2E7D32;
+	transition: 0.2s;
+}
+
+.qsiPortal:hover {
+	background-color: #4CAF50;
+}
+
+.qsiPortal:hover .qsiDescription{
+	color: white;
+}
+
+/* 
+@media only screen and (max-width: 768px) {
+	.portalContainer {
+		flex-direction: column;
+	}
+} */
+
+.simplexDescription {
+	text-align: center;
+	transition: 0.2s;
+}
+
+.qsiDescription {
+	text-align: center;
+	transition: 0.2s;
+}
+
+/* LOWER THIRDS */
+.projectDetails {
+	position: absolute;
+	bottom: 5px;
+	right: 10px;
+
+	color: white;
+	text-align: right;
+	white-space: pre-wrap;
+	font-size: 12px;
+}
+
+.github-logo {
+	border-radius: 50%;
+	opacity: 0.8;
+}
+
+.github-logo:hover {
+	opacity: 1;
+}
