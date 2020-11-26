@@ -189,7 +189,7 @@ function displayTableau(tableau, iterationCount) {
     
 }
 
-function displayFinalSolution(tableau, isMax, solutionExists) {
+function displayFinalSolution(tableau, isMax, solutionExists, roundingFactor) {
     const container = document.getElementById("stepBystepSolutions");
     if(!solutionExists) {
         const title = document.createElement('h2');
@@ -230,7 +230,7 @@ function displayFinalSolution(tableau, isMax, solutionExists) {
                             //find the row k which has the 1 value and get the corresponding value in the solution column
                             for(var k = 0; k < rowCountTab; k++) {
                                 if(tableau[k][j] === 1) {
-                                    newCell.innerHTML = tableau[k][colCountTab - 1];
+                                    newCell.innerHTML = Math.round(tableau[k][colCountTab - 1] * roundingFactor) / roundingFactor;
                                 }
                             }
                         }
@@ -242,10 +242,10 @@ function displayFinalSolution(tableau, isMax, solutionExists) {
                     else {
                         //Z value (last column) should get the value from the last row last column
                         if(j == colCountTab - 2) {
-                            newCell.innerHTML = tableau[rowCountTab - 1][j + 1];
+                            newCell.innerHTML = Math.round(tableau[rowCountTab - 1][j + 1] * roundingFactor) / roundingFactor;
                         }
                         else {
-                            newCell.innerHTML = tableau[rowCountTab - 1][j];
+                            newCell.innerHTML = Math.round(tableau[rowCountTab - 1][j] * roundingFactor) / roundingFactor;
                         }
                     }
                 }
@@ -331,7 +331,7 @@ function scrapeTableau(isMax) {
     return tableau;
 }
 
-function simplex(tableau, isMax, problem) {
+function simplex(tableau, isMax) {
     //clear the previous tableau
     document.getElementById("stepBystepSolutions").innerHTML = "";
 
@@ -372,7 +372,7 @@ function simplex(tableau, isMax, problem) {
         const pivotElement = tableau[pivotRow][pivotCol];
 
         //x divide pivotElement, then round off
-        const normalizedRow = tableau[pivotRow].map((x) => Math.round((x / pivotElement) * roundingFactor) / roundingFactor);
+        const normalizedRow = tableau[pivotRow].map(x => x / pivotElement);
 
         tableau[pivotRow] = normalizedRow;
 
@@ -382,15 +382,20 @@ function simplex(tableau, isMax, problem) {
             if(i == pivotRow) continue;
             for(var j = 0; j < colCountTab; j++) {
                 eliminatedValue = tableau[i][j] - (normalizedRow[j] * tableau[i][pivotCol]);
-                //round off first before pushing
-                row.push(Math.round(eliminatedValue * roundingFactor) / roundingFactor);
+                row.push(eliminatedValue);
             }
             tableau[i] = row;
         }
+
+        //round-off every value if persistent precision is enabled
+        if(document.getElementById("persistentPrecision").checked) {
+            tableau = tableau.map(row => row.map(x => Math.round(x * roundingFactor) / roundingFactor));
+        }
+
         //if the iteration upper limit is met, then it has no unique solutions
         if(iterationCount == colCountTab + 19) {
             solutionExists = false;
         }
     }
-    displayFinalSolution(tableau, isMax, solutionExists);
+    displayFinalSolution(tableau, isMax, solutionExists, roundingFactor);
 }

@@ -67,9 +67,13 @@
         </div>
         <div class="parameterContainer">
             <p>Round-off values to <input id="precision" type="number" value="4"> decimal places</p>
+            <div class="persistentPrecisionContainer">
+                <input type="checkbox" id="persistentPrecision">
+                <p>Round-off value in every iteration</p>
+            </div>
             <div>
-                <button id="amber" onClick="simplex(scrapeTableau(true), true, false)">Maximize</button>
-                <button id="orange" onClick="simplex(scrapeTableau(false), false, false)">Minimize</button>
+                <button id="amber" onClick="simplex(scrapeTableau(true), true)">Maximize</button>
+                <button id="orange" onClick="simplex(scrapeTableau(false), false)">Minimize</button>
             </div>
         </div>
     </div>

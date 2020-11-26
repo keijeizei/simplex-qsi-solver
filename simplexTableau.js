@@ -158,7 +158,7 @@ function displayTableau(tableau, iterationCount) {
     }
 }
 
-function displayFinalSolution(tableau, isMax) {
+function displayFinalSolution(tableau, isMax, roundingFactor) {
     const container = document.getElementById("stepBystepSolutions");
 
     const title = document.createElement('h2');
@@ -189,7 +189,7 @@ function displayFinalSolution(tableau, isMax) {
                         //find the row k which has the 1 value and get the corresponding value in the solution column
                         for(var k = 0; k < rowCount - 1; k++) {
                             if(tableau[k][j] === 1) {
-                                newCell.innerHTML = tableau[k][colCount - 1];
+                                newCell.innerHTML = Math.round(tableau[k][colCount - 1] * roundingFactor) / roundingFactor;
                             }
                         }
                     }
@@ -201,10 +201,10 @@ function displayFinalSolution(tableau, isMax) {
                 else {
                     //Z value (last column) should get the value from the last row last column
                     if(j == colCount - 2) {
-                        newCell.innerHTML = tableau[rowCount - 2][j + 1];
+                        newCell.innerHTML = Math.round(tableau[rowCount - 2][j + 1] * roundingFactor) / roundingFactor;
                     }
                     else {
-                        newCell.innerHTML = tableau[rowCount - 2][j];
+                        newCell.innerHTML = Math.round(tableau[rowCount - 2][j] * roundingFactor) / roundingFactor;
                     }
                 }
             }
@@ -261,7 +261,7 @@ function simplex(tableau, isMax) {
         const pivotElement = tableau[pivotRow][pivotCol];
 
         //x divide pivotElement, then round off
-        const normalizedRow = tableau[pivotRow].map((x) => Math.round((x / pivotElement) * roundingFactor) / roundingFactor);
+        const normalizedRow = tableau[pivotRow].map((x) => x / pivotElement);
 
         tableau[pivotRow] = normalizedRow;
 
@@ -271,12 +271,17 @@ function simplex(tableau, isMax) {
             if(i == pivotRow) continue;
             for(var j = 0; j < colCountTab; j++) {
                 eliminatedValue = tableau[i][j] - (normalizedRow[j] * tableau[i][pivotCol]);
-                //round off first before pushing
-                row.push(Math.round(eliminatedValue * roundingFactor) / roundingFactor);
+                row.push(eliminatedValue);
             }
             tableau[i] = row;
         }
+
+        //round-off every value if persistent precision is enabled
+        if(document.getElementById("persistentPrecision").checked) {
+            tableau = tableau.map(row => row.map(x => Math.round(x * roundingFactor) / roundingFactor));
+        }
+
         displayTableau(tableau, ++iterationCount);
     }
-    displayFinalSolution(tableau, isMax);
+    displayFinalSolution(tableau, isMax, roundingFactor);
 }

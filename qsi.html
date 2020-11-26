@@ -41,6 +41,10 @@
         <div class="parameterContainer">
             <p>Value to be approximated: <input id="xvalue" type="number" value="425" onClick="this.select()"></p>
             <p>Round-off values to <input id="precision" type="number" value="4" onClick="this.select()"> decimal places</p>
+            <div class="persistentPrecisionContainer">
+                <input type="checkbox" id="persistentPrecision">
+                <p>Round-off value in every iteration</p>
+            </div>
             <button id="amber" onClick="qsi(scrapeMatrix(), scrapeXValue())">Solve</button>
         </div>
     </div>

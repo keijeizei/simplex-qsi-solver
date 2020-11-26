@@ -161,6 +161,11 @@ button:hover {
 	margin: 10px;
 }
 
+.persistentPrecisionContainer {
+	display: flex;
+	margin: 10px;
+}
+
 /*answerContainer is an ID because it is used in the JS*/
 #answerContainer {
 	display: flex;

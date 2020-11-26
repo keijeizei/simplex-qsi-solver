@@ -1,7 +1,7 @@
 //initial counts
-var rowCount = 5;       //rows of the GUI matrix
+var rowCount = 5;                   //rows of the GUI matrix
 
-var isMatrixVisible = false;       //show/hide the gauss-jordan step by step solution
+var isMatrixVisible = false;        //show/hide the gauss-jordan step by step solution
 
 function addRow() {
     const table = document.getElementById("table");
@@ -215,11 +215,7 @@ function GaussJordanElimination(matrix, roundingFactor) {
         matrix[maxIndex] = temp;
 
         //normalize the pivot row
-        //*/
         matrix[i] = matrix[i].map(x => x / matrix[i][i]);
-        /*/
-        matrix[i] = matrix[i].map(x => Math.round((x / matrix[i][i]) * roundingFactor) / roundingFactor);
-        //*/
 
         //start elimination per row
         for(var j = 0; j < rowCountAugCoeff; j++) {
@@ -227,12 +223,14 @@ function GaussJordanElimination(matrix, roundingFactor) {
             //find the temporary vector
             tempVector = matrix[i].map(x => x * matrix[j][i]);
             //elimination
-            //*/
             matrix[j] = matrix[j].map((x, i) => x - tempVector[i]);
-            /*/
-            matrix[j] = matrix[j].map((x, i) => Math.round((x - tempVector[i]) * roundingFactor) / roundingFactor);
-            //*/
         }
+
+        //round-off every value if persistent precision is enabled
+        if(document.getElementById("persistentPrecision").checked) {
+            matrix = matrix.map(row => row.map(x => Math.round(x * roundingFactor) / roundingFactor));
+        }
+
         //display matrix every iteration
         if(isMatrixVisible) displayMatrix(matrix, i + 1);
     }
