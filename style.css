@@ -45,9 +45,9 @@ h3 {
 }
 
 a {
-	font-family: "Roboto-Regular";
+	font-family: "Roboto-Black";
 	font-size: 16px;
-	color: white;
+	color: black;
 }
 
 table {
@@ -104,6 +104,7 @@ button {
 	margin: 10px 5px;
 	padding: 20px 30px;
 	color: white;
+	background-color: #FF6F00;	/* button is color amber by default*/
 	border: 0;
 	border-radius: 30px;
 }

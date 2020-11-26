@@ -1,6 +1,8 @@
 //initial counts
 var rowCount = 5;       //rows of the GUI matrix
 
+var isMatrixVisible = false;       //show/hide the gauss-jordan step by step solution
+
 function addRow() {
     const table = document.getElementById("table");
     const row = table.insertRow(-1);
@@ -48,9 +50,9 @@ function displayAnswer(x, y, solutions, matrix, roundingFactor) {
     bounds.innerHTML = "";
     
     for(var i = 0; i < (solutions.length) / 3; i++) {
-        var a = Math.round(solutions[i] * roundingFactor) / roundingFactor;
-        var b = Math.round(solutions[i + 1] * roundingFactor) / roundingFactor;
-        var c = Math.round(solutions[i + 2] * roundingFactor) / roundingFactor;
+        var a = Math.round(solutions[3 * i] * roundingFactor) / roundingFactor;
+        var b = Math.round(solutions[3 * i + 1] * roundingFactor) / roundingFactor;
+        var c = Math.round(solutions[3 * i + 2] * roundingFactor) / roundingFactor;
         functions.innerHTML = `${functions.innerHTML}${a}x<sup>2</sup> + ${b}x + ${c}</br>`;
         //the empty <sup> is just to match the text height of the functions
         bounds.innerHTML = `${bounds.innerHTML} ${matrix[i][0]} &#x2264; x &#x2264; ${matrix[i + 1][0]} <sup></sup></br>`;
@@ -79,6 +81,7 @@ function getY(matrix, solutions, roundingFactor, x) {
             }
             if(x >= matrix[i][0]) {
                 y = Math.round((solutions[3 * i] * Math.pow(x, 2) + solutions[3 * i + 1] * x + solutions[3 * i + 2]) * roundingFactor) / roundingFactor;
+                // y = (solutions[3 * i] * Math.pow(x, 2) + solutions[3 * i + 1] * x + solutions[3 * i + 2]);
                 break;
             }
         }
@@ -106,6 +109,7 @@ function displayGraph(matrix, solutions, roundingFactor) {
     //determine the real ymin and ymax by calculating all values
     for(var i = 0; i < (xrange + step); i += step) {
         var yTest = getY(matrix, solutions, roundingFactor, i + xmin);
+        // console.log(yTest, i + xmin)
         if(yTest > ymax) ymax = yTest;
         else if(yTest < ymin) ymin = yTest;
     }
@@ -182,13 +186,14 @@ function displayGraph(matrix, solutions, roundingFactor) {
         const oldGraph = document.getElementById("graph");
         answerContainer.removeChild(oldGraph);          //try to clear the last graph
     }
-    catch {
-
-    }
+    catch {}
     answerContainer.appendChild(graph);
 }
 
-function GaussJordanElimination(matrix) {
+function GaussJordanElimination(matrix, roundingFactor) {
+    //display initial matrix
+    if(isMatrixVisible) displayMatrix(matrix, 0);
+
     for(var i = 0; i < colCountAugCoeff - 1; i++) {
         //get the current column
         const column = matrix.map(x => x[i]);
@@ -210,7 +215,11 @@ function GaussJordanElimination(matrix) {
         matrix[maxIndex] = temp;
 
         //normalize the pivot row
+        //*/
         matrix[i] = matrix[i].map(x => x / matrix[i][i]);
+        /*/
+        matrix[i] = matrix[i].map(x => Math.round((x / matrix[i][i]) * roundingFactor) / roundingFactor);
+        //*/
 
         //start elimination per row
         for(var j = 0; j < rowCountAugCoeff; j++) {
@@ -218,16 +227,63 @@ function GaussJordanElimination(matrix) {
             //find the temporary vector
             tempVector = matrix[i].map(x => x * matrix[j][i]);
             //elimination
+            //*/
             matrix[j] = matrix[j].map((x, i) => x - tempVector[i]);
-            // console.log(matrix[j])
+            /*/
+            matrix[j] = matrix[j].map((x, i) => Math.round((x - tempVector[i]) * roundingFactor) / roundingFactor);
+            //*/
         }
+        //display matrix every iteration
+        if(isMatrixVisible) displayMatrix(matrix, i + 1);
     }
     //get the right hand side column
     const solutions = matrix.map(x => x[colCountAugCoeff - 1]);
     return solutions;
 }
 
+//toggle visibility of the step by step matrix
+function toggleMatrix() {
+    isMatrixVisible = !isMatrixVisible;
+    if(isMatrixVisible) {                                           //re-run to display the matrix
+        qsi(scrapeMatrix(), scrapeXValue());
+        document.getElementById("toggleMatrixButton").innerHTML = "Hide Solution Matrix";
+    }
+    else {                                                      //delete the solution
+        document.getElementById("stepBystepSolutions").innerHTML = "";
+        document.getElementById("toggleMatrixButton").innerHTML = "Show Solution Matrix";
+    }
+}
+
+function displayMatrix(matrix, iterationCount) {
+    const container = document.getElementById("stepBystepSolutions");
+
+    const iterationTitle = document.createElement('h2');
+    iterationTitle.setAttribute("id", "tableTitle");
+    iterationTitle.innerHTML = "ITERATION " + iterationCount;
+    container.appendChild(iterationTitle);
+
+    const solutionTable = document.createElement('table');
+    solutionTable.setAttribute("id", "solutionTable");
+    container.appendChild(solutionTable);
+
+    for(var i = 0; i < matrix.length; i++) {
+        var row = solutionTable.insertRow(-1);
+        for(var j = 0; j < matrix[0].length; j++) {
+            var cell = row.insertCell(-1);
+            var newCell = document.createElement('p');
+
+            newCell.innerHTML = matrix[i][j];
+
+            cell.appendChild(newCell);
+        }
+    }
+}
+
 function qsi(matrix, x) {
+    //clear the previous tableau
+    const container = document.getElementById("stepBystepSolutions");
+    container.innerHTML = "";
+
     //get the number of decimal places
     var roundingFactor;
     const precision = document.getElementById("precision");
@@ -302,13 +358,18 @@ function qsi(matrix, x) {
 
     //----------------------------------------SOLVING
     //solve the matrix using gauss-jordan elimination
-    solutions = GaussJordanElimination(augcoeff);
+    solutions = GaussJordanElimination(augcoeff, roundingFactor);
 
     //add a 0 at the start of the solution set for a_1
     solutions.splice(0,0,0);
     // console.log(solutions)
 
+    //----------------------------------------DISPLAYING ANSWERS
     const y = getY(matrix, solutions, roundingFactor, x);
     displayAnswer(x, y, solutions, matrix, roundingFactor);
+
+    //show the toggle matrix button
+    document.getElementById("toggleMatrixButton").style.display = "block";
+
     displayGraph(matrix, solutions, roundingFactor);
 }

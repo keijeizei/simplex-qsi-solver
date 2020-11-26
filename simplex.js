@@ -333,8 +333,7 @@ function scrapeTableau(isMax) {
 
 function simplex(tableau, isMax, problem) {
     //clear the previous tableau
-    const container = document.getElementById("stepBystepSolutions");
-    container.innerHTML = "";
+    document.getElementById("stepBystepSolutions").innerHTML = "";
 
     //rowCount and colCount for the numerical tableau
     rowCountTab = tableau.length;

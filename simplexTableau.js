@@ -156,7 +156,6 @@ function displayTableau(tableau, iterationCount) {
             cell.appendChild(newCell);
         }
     }
-    
 }
 
 function displayFinalSolution(tableau, isMax) {
@@ -228,10 +227,9 @@ function scrapeTableau() {
     return tableau;
 }
 
-function simplex(tableau, isMax, problem) {
+function simplex(tableau, isMax) {
     //clear the previous tableau
-    const container = document.getElementById("stepBystepSolutions");
-    container.innerHTML = "";
+    document.getElementById("stepBystepSolutions").innerHTML = "";
 
     //rowCount and colCount for the numerical tableau
     rowCountTab = tableau.length;
