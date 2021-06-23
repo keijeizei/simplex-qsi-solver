@@ -1,0 +1,4 @@
+http://simplex-qsi-solver.netlify.app/index.html
+http://simplex-qsi-solver.netlify.app/simplex.html
+http://simplex-qsi-solver.netlify.app/simplexTableau.html
+http://simplex-qsi-solver.netlify.app/qsi.html
