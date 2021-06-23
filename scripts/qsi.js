@@ -63,7 +63,7 @@ function displayAnswer(x, y, solutions, matrix, roundingFactor) {
         yvalue.innerHTML = "The x value is not within the bounds";
     }
     else {
-        yvalue.innerHTML = `The value of f(${x}) is ${y}`;
+        yvalue.innerHTML = `The value of f(${x}) is &#8776;${y}`;
     }
 }
 

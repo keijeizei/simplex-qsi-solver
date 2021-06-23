@@ -17,8 +17,8 @@
         <div class="tableContainerQSI">
             <table id="table">
                 <tr class="topRow">
-                    <td><input id="blue" type="text" value="x" onClick="this.select()"></td>
-                    <td><input id="teal" type="text" value="f(x)" onClick="this.select()"></td>
+                    <td><input id="blue" type="text" value="x" disabled="true""></td>
+                    <td><input id="teal" type="text" value="f(x)" disabled="true"></td>
                 </tr>
                 <tr>
                     <td><input type="number" value=300 onClick="this.select()"></td>
@@ -41,7 +41,10 @@
         <div class="parameterContainer">
             <p>Value to be approximated: <input id="xvalue" type="number" value="425" onClick="this.select()"></p>
             <p>Round-off values to <input id="precision" type="number" value="4" onClick="this.select()"> decimal places</p>
-            <div class="persistentPrecisionContainer">
+			<div
+				class="persistentPrecisionContainer"
+				title="Round-off values in every matrix elimination to simulate a manual computation."
+			>
                 <input type="checkbox" id="persistentPrecision">
                 <p>Round-off value in every iteration</p>
             </div>
